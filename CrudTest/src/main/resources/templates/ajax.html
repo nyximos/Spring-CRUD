@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>index</title>
+</head>
+
+
+<body>
+
+<label>저자
+  <input type="text" id="author" name="author"></label>
+<br>
+<label>제목
+  <input type="text" id="title" name="title"></label>
+<br>
+<label>내용
+  <textarea id="content" name="content"></textarea>
+</label>
+<br>
+<button type="button" id="submit">등록</button>
+
+
+<div th:each=" book : ${books}">
+  <div><h4 th:text="${book.id}"></h4></div>
+  <div th:text="${book.author}"></div>
+  <div th:text="${book.title}"></div>
+  <div th:text="${book.content}"></div>
+</div>
+
+
+
+</body>
+
+<script>
+  let author = $('#author').val();
+  let title  = $('#title').val();
+  let content = $('#content').val();
+  $('#submit').click(function (){
+    $.ajax({
+      type:"POST",
+      url:"/ajax",
+      data:{
+        author:author,
+        title:title,
+        content:content
+      },
+      success:function(){
+        alert('성공');
+      },
+      error:function (){
+        alert('실패');
+      }
+    })
+  });
+</script>
+</html>

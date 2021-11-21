@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>index</title>
+</head>
+<body>
+
+<form action="/" method="post">
+
+    <div>
+        <div>저자</div>
+        <input type="text" name="author"/>
+    </div>
+
+    <div>
+        <div>제목</div>
+        <input type="text" name="title"/>
+    </div>
+
+    <div>
+        <div>내용</div>
+        <textarea name="content"></textarea>
+    </div>
+
+    <input  type="submit" role="button" value="등록">
+</form>
+
+    <div th:each=" book : ${books}">
+        <div><h4 th:text="${book.id}"></h4></div>
+        <div th:text="${book.author}"></div>
+        <div th:text="${book.title}"></div>
+        <div th:text="${book.content}"></div>
+        <div>
+            <form th:action="@{'/{id}'(id=${book.id})}" method="post">
+                <input type="hidden" name="_method" value="delete">
+                <button type="submit">삭제</button>
+            </form>
+        </div>
+    </div>
+
+
+
+</body>
+</html>
