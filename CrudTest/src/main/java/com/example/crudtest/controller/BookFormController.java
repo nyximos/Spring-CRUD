@@ -29,15 +29,15 @@ public class BookFormController {
         return "index";
     }
 
-    // 상세조회
-   @GetMapping("/{id}")
+    // 상세
+   @GetMapping("/{id}/modify")
     public String getIndex(Model model,
                            @PathVariable Long id){
 
         Optional<Book> book = bookService.getBook(id);
-        model.addAttribute("book", book);
-
-        return "index";
+        bookService.getBook(id).ifPresent(o -> model.addAttribute("book", o));
+        System.out.println(book);
+        return "book";
     }
 
 
@@ -57,7 +57,7 @@ public class BookFormController {
     }
 
     // 삭제
-    @PostMapping("/{id}")
+    @PostMapping("/{id}/delete")
     public String deleteBook(Model model, @PathVariable Long id) {
 
         bookService.deleteBook(id);
@@ -68,19 +68,23 @@ public class BookFormController {
     }
 
     // 수정
-    @PostMapping("/{id}")
+    @PostMapping("/{id}/modify")
     public String updateBook(Model model,
                              @RequestParam String author,
                              @RequestParam String title,
                              @RequestParam String content,
                              @PathVariable Long id){
 
-        Optional<Book> book = bookService.getBook(id);
+        Book book = bookService.getBook(id).get();
+        book.setAuthor(author);
+        book.setTitle(title);
+        book.setContent(content);
 
+        bookService.saveBook(book);
 
         List<Book> books = bookService.getBookList();
         model.addAttribute("books", books);
-        return "index";
+        return "book";
     }
 
 }

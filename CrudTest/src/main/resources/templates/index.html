@@ -32,7 +32,7 @@
         <div th:text="${book.title}"></div>
         <div th:text="${book.content}"></div>
         <div>
-            <form th:action="@{'/{id}'(id=${book.id})}" method="post">
+            <form th:action="@{'/{id}/delete'(id=${book.id})}" method="post">
                 <input type="hidden" name="_method" value="delete">
                 <button type="submit">삭제</button>
             </form>
